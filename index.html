@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        height: 100%;
+      }
+      table {
+        height: 90%;
+      }
+      tr {
+        width: 100%;
+        height: 25%;
+      }
+      td {
+        width: 7.5%;
+        font-size: 48px;
+        font-size: 4vw;
+        background-clip: padding-box;
+        border-radius: 5px;
+        background-color: #dfd;
+        border: 2px solid black;
+        align-content: center;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .red {
+        color: red;
+      }
+      .black {
+        color: black;
+      }
+      td.discarded {
+        background-color: #fdb;
+      }
+    </style>
+    <script type='text/javascript'>
+      function resetCells() {
+        document.querySelectorAll('.discarded').forEach(function(el) {
+          el.classList.remove('discarded');
+        });
+      }
+      function toggleDiscarded() {
+        this.classList.toggle('discarded');
+      }
+      function onLoadFn() {
+        var cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        var syms = ['spades', 'diamonds', 'clubs', 'hearts'];
+        var colorClass = { spades: 'black', diamonds: 'red', clubs: 'black', hearts: 'red' };
+        var body = document.getElementsByTagName('body')[0];
+        var table = document.createElement('table');
+        var tbody = document.createElement('tbody');
+        syms.forEach(function(sym) {
+          var row = document.createElement('tr');
+          cards.forEach(function(card) {
+            var cell = document.createElement('td');
+            var icon = document.createElement('img');
+            cell.setAttribute('class', colorClass[sym]);
+            icon.setAttribute('src', 'images/' + sym + '.png');
+            icon.setAttribute('style', 'height: auto; width: 40%;');
+            var numNode = document.createTextNode(card);
+            cell.appendChild(icon);
+            cell.appendChild(numNode);
+            cell.addEventListener('click', toggleDiscarded);
+            row.appendChild(cell);
+          });
+          tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        body.appendChild(table);
+      }
+    </script>
+  </head>
+  <body onload="onLoadFn()">
+    <button style="padding: 5 10 5 10; margin: 5 10 5 10; background-color: red; color: white;" onclick="resetCells()">RESET</button>
+  </body>
+</html>
